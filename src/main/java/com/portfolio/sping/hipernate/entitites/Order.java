@@ -138,7 +138,15 @@ public class Order implements Serializable {
 		return Objects.hash(id);
 	}
 
-
+public Double GetTotal() {
+	double sum =0;
+	
+	for(OrderItem x : items) {
+		sum +=  x.getSubtotal();
+	}
+	return sum;
+	
+}
 
 	@Override
 	public boolean equals(Object obj) {
