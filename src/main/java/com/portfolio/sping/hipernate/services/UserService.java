@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.portfolio.sping.hipernate.entitites.User;
 import com.portfolio.sping.hipernate.repositories.UserRepository;
+import com.portfolio.sping.hipernate.services.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -25,7 +26,7 @@ public class UserService {
 public User findByID(Long id) {
 	
 Optional<User> obj = repository.findById(id);
-	return obj.get();
+	return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 	
 }
 
