@@ -13,6 +13,8 @@ import com.portfolio.sping.hipernate.repositories.UserRepository;
 import com.portfolio.sping.hipernate.services.exceptions.DatabaseException;
 import com.portfolio.sping.hipernate.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 
 @Service
 public class UserService {
@@ -51,9 +53,13 @@ repository.deleteById(id);
 	
 }
 public User update(Long id, User obj) {
-	User entity = repository.getReferenceById(id);
+	try{User entity = repository.getReferenceById(id);
 	updateData(entity, obj);
-	return repository.save(entity);
+	return repository.save(entity);}
+	catch (EntityNotFoundException e) {
+		throw new ResourceNotFoundException(id);
+	
+	}
 	
 	
 }
